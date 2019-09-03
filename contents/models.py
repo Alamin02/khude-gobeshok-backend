@@ -8,7 +8,7 @@ class ThumbnailImage2(models.Model):
     image = models.ImageField(upload_to="images/")
     caption = models.CharField(blank=True, max_length=120)
     thumbnail = ImageSpecField(source='image',
-                                      processors=[SmartResize(400, 300)],
+                                      processors=[SmartResize(300, 225)],
                                       format='JPEG',
                                       options={'quality': 60},)
 

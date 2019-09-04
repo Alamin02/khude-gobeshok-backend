@@ -8,7 +8,7 @@ class UserSerializer(ModelSerializer):
         fields = ['username']
 
 
-class ProfileCreateSerializer(ModelSerializer):
+class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['profile_owner']
+        fields = ['full_name', 'bio', 'phone_number', 'country', 'address']

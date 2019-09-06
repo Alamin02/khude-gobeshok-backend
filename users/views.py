@@ -1,9 +1,9 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import RetrieveAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, CreateAPIView
 
-from users.models import Profile, User
-from users.serializers import UserSerializer, ProfileSerializer
+from users.models import User, Education
+from users.serializers import UserSerializer, ProfileSerializer, EducationListSerializer, EducationSerializer
 
 
 class GetUser(APIView):
@@ -20,3 +20,21 @@ class RetrieveProfile(RetrieveUpdateAPIView):
         profile_name = self.kwargs.get(self.lookup_url_kwarg)
         profile = User.objects.get(username=profile_name).profile
         return profile
+
+
+class ListEducation(ListAPIView):
+    serializer_class = EducationListSerializer
+    lookup_url_kwarg = "profile_username"
+
+    def get_queryset(self):
+        profile_name = self.kwargs.get(self.lookup_url_kwarg)
+        user = User.objects.get(username=profile_name)
+        return Education.objects.filter(user=user)
+
+
+class CreateEducation(CreateAPIView):
+    queryset = Education.objects.all()
+    serializer_class = EducationSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

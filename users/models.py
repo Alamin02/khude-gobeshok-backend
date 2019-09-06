@@ -18,3 +18,13 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.profile_owner.username
+
+
+class Education(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    institute = models.CharField(max_length=250)
+    major = models.CharField(max_length=250)
+    degree = models.CharField(max_length=120)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+    currently_enrolled = models.BooleanField()

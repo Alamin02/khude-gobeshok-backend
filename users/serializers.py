@@ -17,7 +17,7 @@ class ProfileSerializer(ModelSerializer):
 class EducationListSerializer(ModelSerializer):
     class Meta:
         model = Education
-        fields = ['id', 'user', 'institute', 'degree', 'start_date', 'end_date', 'currently_enrolled']
+        fields = ['id', 'user', 'institute', 'major', 'degree', 'start_date', 'end_date', 'currently_enrolled']
 
 
 class EducationSerializer(ModelSerializer):

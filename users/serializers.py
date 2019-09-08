@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import User, Profile, Education
+from .models import User, Profile, Education, Job
 
 
 class UserSerializer(ModelSerializer):
@@ -23,4 +23,10 @@ class EducationListSerializer(ModelSerializer):
 class EducationSerializer(ModelSerializer):
     class Meta:
         model = Education
-        fields = ['id', 'institute', 'degree', 'start_date', 'end_date', 'currently_enrolled']
+        fields = ['id', 'institute', 'major', 'degree', 'start_date', 'end_date', 'currently_enrolled']
+
+
+class JobSerializer(ModelSerializer):
+    class Meta:
+        model = Job
+        fields = ['id', 'company', 'position', 'start_date', 'end_date', 'currently_working']

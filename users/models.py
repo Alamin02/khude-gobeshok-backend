@@ -28,3 +28,12 @@ class Education(models.Model):
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     currently_enrolled = models.BooleanField()
+
+
+class Job(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    company = models.CharField(max_length=250)
+    position = models.CharField(max_length=250)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+    currently_working = models.BooleanField()

@@ -1,15 +1,18 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, CreateAPIView, DestroyAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, CreateAPIView, DestroyAPIView, RetrieveAPIView, \
+    UpdateAPIView
 
 from users.models import User, Education, Job
-from users.serializers import UserSerializer, ProfileSerializer, EducationListSerializer, EducationSerializer, JobSerializer
+from users.serializers import UserSerializer, ProfileSerializer, EducationListSerializer, EducationSerializer, JobSerializer, ProfileBioSerializer
 
 
-class GetUser(APIView):
-    def get(self, request):
-        serializer = UserSerializer(request.user)
-        return Response(serializer.data)
+class RetrieveUser(RetrieveAPIView):
+    serializer_class = UserSerializer
+    lookup_url_kwarg = "profile_username"
+
+    def get_object(self):
+        profile_name = self.kwargs.get(self.lookup_url_kwarg)
+        user = User.objects.get(username=profile_name)
+        return user
 
 
 class RetrieveProfile(RetrieveUpdateAPIView):
@@ -19,6 +22,14 @@ class RetrieveProfile(RetrieveUpdateAPIView):
     def get_object(self):
         profile_name = self.kwargs.get(self.lookup_url_kwarg)
         profile = User.objects.get(username=profile_name).profile
+        return profile
+
+
+class UpdateBio(UpdateAPIView):
+    serializer_class = ProfileBioSerializer
+
+    def get_object(self):
+        profile = User.objects.get(username=self.request.user).profile
         return profile
 
 
@@ -32,6 +43,7 @@ class ListEducation(ListAPIView):
         return Education.objects.filter(user=user)
 
 
+# Have to add authentication
 class CreateEducation(CreateAPIView):
     queryset = Education.objects.all()
     serializer_class = EducationSerializer
@@ -40,6 +52,7 @@ class CreateEducation(CreateAPIView):
         serializer.save(user=self.request.user)
 
 
+# Have to add authentication
 class DeleteEducation(DestroyAPIView):
     queryset = Education.objects.all()
     serializer_class = EducationSerializer
@@ -55,6 +68,7 @@ class ListJob(ListAPIView):
         return Job.objects.filter(user=user)
 
 
+# Have to add authentication
 class CreateJob(CreateAPIView):
     serializer_class = JobSerializer
     queryset = Job.objects.all()
@@ -63,6 +77,7 @@ class CreateJob(CreateAPIView):
         serializer.save(user=self.request.user)
 
 
+# Have to add authentication
 class DeleteJob(DestroyAPIView):
     queryset = Job.objects.all()
     serializer_class = JobSerializer

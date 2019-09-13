@@ -5,13 +5,19 @@ from .models import User, Profile, Education, Job
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['username']
+        fields = ['username', 'email', 'date_joined']
 
 
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
         fields = ['full_name', 'bio', 'phone_number', 'country', 'address']
+
+
+class ProfileBioSerializer(ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['bio']
 
 
 class EducationListSerializer(ModelSerializer):

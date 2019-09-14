@@ -4,9 +4,8 @@ from imagekit.processors import ResizeToFill, SmartResize
 
 
 # Create your models here.
-class ThumbnailImage2(models.Model):
+class ThumbnailImage(models.Model):
     image = models.ImageField(upload_to="images/")
-    caption = models.CharField(blank=True, max_length=120)
     thumbnail = ImageSpecField(source='image',
                                       processors=[SmartResize(300, 225)],
                                       format='JPEG',

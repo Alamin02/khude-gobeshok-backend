@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, ImageField
-from .models import ImageContent, ThumbnailImage
+from .models import ImageContent, ThumbnailImage, ProfileImage
 
 
 class ImageContentSerializer(ModelSerializer):
@@ -8,16 +8,20 @@ class ImageContentSerializer(ModelSerializer):
         fields = ['image']
 
 
-class ThumbnailImageCreateSerializer(ModelSerializer):
-    class Meta:
-        model = ThumbnailImage
-        fields = ['image']
-
-
-class ThumbnailImageReadSerializer(ModelSerializer):
+class ThumbnailImageSerializer(ModelSerializer):
     thumbnail = ImageField('thumbnail', )
 
     class Meta:
         model = ThumbnailImage
-        read_only = ('thumbnail')
+        read_only = 'thumbnail'
         fields = ['image', 'thumbnail']
+
+
+class ProfileImageSerializer(ModelSerializer):
+    thumbnail = ImageField('thumbnail', )
+
+    class Meta:
+        model = ProfileImage
+        read_only = 'thumbnail'
+        fields = ['image', 'thumbnail']
+

@@ -10,6 +10,7 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     profile_owner = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    profile_picture = models.URLField(blank=True)
     full_name = models.CharField(max_length=100, blank=True)
     bio = models.CharField(max_length=150, blank=True)
     phone_number = models.CharField(max_length=30, blank=True)

@@ -2,7 +2,7 @@ from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, CreateAP
     UpdateAPIView
 
 from users.models import User, Education, Job
-from users.serializers import UserSerializer, ProfileSerializer, EducationListSerializer, EducationSerializer, JobSerializer, ProfileBioSerializer
+from users.serializers import UserSerializer, ProfileSerializer, EducationListSerializer, EducationSerializer, JobSerializer, ProfileBioSerializer, ProfileImageSerializer
 
 
 class RetrieveUser(RetrieveAPIView):
@@ -27,6 +27,14 @@ class RetrieveProfile(RetrieveUpdateAPIView):
 
 class UpdateBio(UpdateAPIView):
     serializer_class = ProfileBioSerializer
+
+    def get_object(self):
+        profile = User.objects.get(username=self.request.user).profile
+        return profile
+
+
+class UpdateProfilePic(UpdateAPIView):
+    serializer_class = ProfileImageSerializer
 
     def get_object(self):
         profile = User.objects.get(username=self.request.user).profile

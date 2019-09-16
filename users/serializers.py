@@ -20,6 +20,12 @@ class ProfileBioSerializer(ModelSerializer):
         fields = ['bio']
 
 
+class ProfileImageSerializer(ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['profile_picture']
+
+
 class EducationListSerializer(ModelSerializer):
     class Meta:
         model = Education

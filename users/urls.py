@@ -1,11 +1,12 @@
 from django.urls import path
 
-from users.views import RetrieveUser, RetrieveProfile, ListEducation, CreateEducation, ListJob, CreateJob, DeleteEducation, DeleteJob, UpdateBio
+from users.views import RetrieveUser, RetrieveProfile, ListEducation, CreateEducation, ListJob, CreateJob, DeleteEducation, DeleteJob, UpdateBio, UpdateProfilePic
 
 urlpatterns = [
     path('get-user/<str:profile_username>', RetrieveUser.as_view(), name="get_user"),
     path('profile/<str:profile_username>', RetrieveProfile.as_view(), name="get_profile"),
     path('profile-bio-update/', UpdateBio.as_view(), name="update_bio"),
+    path('profile-pic-update/', UpdateProfilePic.as_view(), name="update_propic"),
     path('education/<str:profile_username>', ListEducation.as_view(), name="get_education_list"),
     path('add-education/', CreateEducation.as_view(), name="add_education"),
     path('delete-education/<int:pk>/', DeleteEducation.as_view(), name="delete_education"),

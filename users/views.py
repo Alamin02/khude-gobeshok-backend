@@ -1,8 +1,11 @@
-from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, CreateAPIView, DestroyAPIView, RetrieveAPIView, \
-    UpdateAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, CreateAPIView, DestroyAPIView, \
+    RetrieveAPIView, UpdateAPIView
 
 from users.models import User, Education, Job
-from users.serializers import UserSerializer, ProfileSerializer, EducationListSerializer, EducationSerializer, JobSerializer, ProfileBioSerializer, ProfileImageSerializer
+from users.serializers import UserSerializer, ProfileSerializer, \
+    EducationListSerializer, EducationSerializer, JobSerializer, \
+    ProfileBioSerializer, ProfileImageSerializer, ProfileSpecializedInSerializer,\
+    ProfileSoftwareSkillSerializer
 
 
 class RetrieveUser(RetrieveAPIView):
@@ -38,6 +41,26 @@ class UpdateProfilePic(UpdateAPIView):
 
     def get_object(self):
         profile = User.objects.get(username=self.request.user).profile
+        return profile
+
+
+class UpdateSpecializedIn(UpdateAPIView):
+    serializer_class = ProfileSpecializedInSerializer
+    lookup_url_kwarg = "profile_name"
+
+    def get_object(self):
+        profile_name = self.kwargs.get(self.lookup_url_kwarg)
+        profile = User.objects.get(username=profile_name).profile
+        return profile
+
+
+class UpdateSoftwareSkill(UpdateAPIView):
+    serializer_class = ProfileSoftwareSkillSerializer
+    lookup_url_kwarg = "profile_name"
+
+    def get_object(self):
+        profile_name = self.kwargs.get(self.lookup_url_kwarg)
+        profile = User.objects.get(username=profile_name).profile
         return profile
 
 

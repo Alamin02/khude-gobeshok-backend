@@ -23,6 +23,7 @@ urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
 
+    # Update with Plural Nouns
     path('project/', include('projects.urls')),
     path('content/', include('contents.urls')),
     path('users/', include('users.urls')),

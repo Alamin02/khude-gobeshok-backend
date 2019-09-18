@@ -11,7 +11,7 @@ class UserSerializer(ModelSerializer):
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['full_name', 'bio', 'profile_picture', 'phone_number', 'country', 'address']
+        fields = ['full_name', 'bio', 'profile_picture', 'specialized_in', 'software_skills', 'phone_number', 'country', 'address']
 
 
 class ProfileBioSerializer(ModelSerializer):
@@ -24,6 +24,18 @@ class ProfileImageSerializer(ModelSerializer):
     class Meta:
         model = Profile
         fields = ['profile_picture']
+
+
+class ProfileSpecializedInSerializer(ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['specialized_in']
+
+
+class ProfileSoftwareSkillSerializer(ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['software_skills']
 
 
 class EducationListSerializer(ModelSerializer):

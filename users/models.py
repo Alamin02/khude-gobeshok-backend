@@ -13,6 +13,8 @@ class Profile(models.Model):
     profile_picture = models.URLField(blank=True)
     full_name = models.CharField(max_length=100, blank=True)
     bio = models.CharField(max_length=150, blank=True)
+    specialized_in = models.TextField(blank=True)
+    software_skills = models.TextField(blank=True)
     phone_number = models.CharField(max_length=30, blank=True)
     country = models.CharField(max_length=100, blank=True)
     address = models.CharField(max_length=250, blank=True)

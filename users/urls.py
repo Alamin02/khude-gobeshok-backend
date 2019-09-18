@@ -1,6 +1,7 @@
 from django.urls import path
 
-from users.views import RetrieveUser, RetrieveProfile, ListEducation, CreateEducation, ListJob, CreateJob, DeleteEducation, DeleteJob, UpdateBio, UpdateProfilePic
+from users.views import RetrieveUser, RetrieveProfile, ListEducation, CreateEducation, ListJob, CreateJob, \
+    DeleteEducation, DeleteJob, UpdateBio, UpdateProfilePic, UpdateSpecializedIn, UpdateSoftwareSkill
 
 urlpatterns = [
     path('get-user/<str:profile_username>', RetrieveUser.as_view(), name="get_user"),
@@ -13,4 +14,8 @@ urlpatterns = [
     path('job/<str:profile_username>', ListJob.as_view(), name="get_job_list"),
     path('add-job/', CreateJob.as_view(), name="add_job"),
     path('delete-job/<int:pk>/', DeleteJob.as_view(), name="delete_job"),
+
+    # Follow REST url Structure
+    path('<str:profile_name>/specialized-in', UpdateSpecializedIn.as_view(), name="update_specialized_in)"),
+    path('<str:profile_name>/software-skill', UpdateSoftwareSkill.as_view(), name="update_software_skill"),
 ]

@@ -1,27 +1,21 @@
 from users.models import User
 from .models import Project
-from .serializers import ProjectSerializer, ProjectListSerializer
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
+from .serializers import ProjectCreateSerializer, ProjectListSerializer
+from rest_framework.generics import ListAPIView
+from rest_framework import viewsets, mixins
 
 
-# Create your views here.
-class Create(CreateAPIView):
+class ProjectViewSet(mixins.CreateModelMixin,
+                     mixins.ListModelMixin,
+                     mixins.RetrieveModelMixin,
+                     viewsets.GenericViewSet):
     queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
-
-
-class List(ListAPIView):
-    queryset = Project.objects.all()
-    serializer_class = ProjectListSerializer
-
-
-class Retrieve(RetrieveAPIView):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return ProjectListSerializer
+        else:
+            return ProjectCreateSerializer
 
 # View for user's own project list
 class ProfileProjectList(ListAPIView):

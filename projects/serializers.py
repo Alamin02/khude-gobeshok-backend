@@ -1,15 +1,24 @@
-from rest_framework.serializers import ModelSerializer, CharField
-from .models import Project
+from rest_framework import serializers
+from .models import Project, User
 
 
-class ProjectSerializer(ModelSerializer):
+class ProjectCreateSerializer(serializers.ModelSerializer):
+    author = serializers.CharField(max_length=150)
+
     class Meta:
         model = Project
-        fields = ['title', 'thumbnail', 'start_date', 'end_date', 'description']
+        fields = ['title', 'author', 'thumbnail', 'start_date', 'end_date', 'description']
+
+    def create(self, validated_data):
+        data = validated_data.copy()
+
+        # TODO: Add exception e.g: get_object_or_404
+        data['author'] = User.objects.get(username=data['author'])
+        return super(ProjectCreateSerializer, self).create(data)
 
 
-class ProjectListSerializer(ModelSerializer):
-    author = CharField(source='author.username')
+class ProjectListSerializer(serializers.ModelSerializer):
+    author = serializers.CharField(source='author.username')
 
     class Meta:
         model = Project

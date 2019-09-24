@@ -17,6 +17,7 @@ class ProjectViewSet(mixins.CreateModelMixin,
         else:
             return ProjectCreateSerializer
 
+
 # View for user's own project list
 class ProfileProjectList(ListAPIView):
     serializer_class = ProjectListSerializer

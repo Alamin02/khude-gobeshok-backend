@@ -7,7 +7,7 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['title', 'author', 'thumbnail', 'start_date', 'end_date', 'description']
+        fields = ['title', 'author', 'tags', 'teammates', 'thumbnail', 'start_date', 'end_date', 'description']
 
     def create(self, validated_data):
         data = validated_data.copy()

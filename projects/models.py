@@ -7,6 +7,8 @@ from django.contrib.postgres.fields import JSONField
 class Project(models.Model):
     title = models.CharField(max_length=150)
     author = models.ForeignKey(User, on_delete=models.CASCADE,)
+    tags = models.CharField(max_length=120, blank=True)
+    teammates = models.CharField(max_length=120, blank=True)
     thumbnail = models.URLField()
     start_date = models.DateField()
     end_date = models.DateField()

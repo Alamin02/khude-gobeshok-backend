@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from backend.router import router
+import notifications.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('contents/', include('contents.urls')),
     path('users/', include('users.urls')),
     path('api/', include(router.urls)),
+    path('api/notifications', include(notifications.urls, namespace='notifications'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

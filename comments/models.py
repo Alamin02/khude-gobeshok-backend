@@ -9,4 +9,4 @@ class Comment(models.Model):
     commenter = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField()
     time = models.DateTimeField(auto_now=True)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)

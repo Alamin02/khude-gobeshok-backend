@@ -7,4 +7,10 @@ from comments.models import Comment
 # Create your views here.
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    queryset = Comment.objects.all()
+
+    def get_queryset(self):
+        queryset = Comment.objects.all()
+        project = self.request.query_params.get('project', None)
+        if project is not None:
+            queryset = queryset.filter(project=project)
+        return queryset

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'projects',
     'contents',
     'comments',
+    'directmessages',
 ]
 
 MIDDLEWARE = [

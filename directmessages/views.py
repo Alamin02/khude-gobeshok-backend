@@ -9,4 +9,6 @@ class ConversationViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationSerializer
 
     def get_queryset(self):
-        return DirectMessage.objects.latest_distinct()
+        ret = DirectMessage.objects.latest_distinct()
+        ret = ret.filter(Q(sender=self.request.user)| Q(recipient=self.request.user))
+        return ret

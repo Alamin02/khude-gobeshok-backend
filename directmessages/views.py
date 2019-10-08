@@ -11,8 +11,6 @@ class ConversationViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         profile_name = self.request.GET.get('username', None)
-        ret = DirectMessage.objects.all()
-        print(profile_name)
         if profile_name is not None:
             contact = User.objects.get(username=profile_name)
             ret = DirectMessage.objects.filter((Q(sender=self.request.user) & Q(recipient=contact)) | (Q(sender=contact) & Q(recipient=self.request.user)))

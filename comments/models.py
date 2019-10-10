@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import User
 from projects.models import Project
+from notifications.models import Notification
 
 
 # Create your models here.
@@ -10,3 +11,4 @@ class Comment(models.Model):
     description = models.TextField()
     time = models.DateTimeField(auto_now=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
+

@@ -6,10 +6,10 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 # Create your models here.
 class Notification(models.Model):
-    INFO = 'i'
-    SUCCESS = 's'
-    WARNING = 'w'
-    ERROR = 'e'
+    INFO = 'info'
+    SUCCESS = 'success'
+    WARNING = 'warning'
+    ERROR = 'error'
     LEVELS = [
         (INFO, 'info'),
         (SUCCESS, 'success'),

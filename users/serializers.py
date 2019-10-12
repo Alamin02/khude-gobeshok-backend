@@ -1,4 +1,5 @@
 from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from .models import User, Profile, Education, Job
 from contents.serializers import ProfileImageSerializer
 
@@ -24,6 +25,14 @@ class ProfileSerializer(ModelSerializer):
             'country',
             'address',
         ]
+
+
+class SquadSerializer(ModelSerializer):
+    profile = ProfileSerializer()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'date_joined', 'profile']
 
 
 class ProfileBioSerializer(ModelSerializer):

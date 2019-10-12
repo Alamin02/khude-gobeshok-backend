@@ -1,11 +1,11 @@
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, CreateAPIView, DestroyAPIView, \
     RetrieveAPIView, UpdateAPIView
-
+from rest_framework import viewsets, mixins
 from users.models import User, Education, Job
 from users.serializers import UserSerializer, ProfileSerializer, \
     EducationListSerializer, EducationSerializer, JobSerializer, \
-    ProfileBioSerializer, ProfileImageSerializer, ProfileSpecializedInSerializer,\
-    ProfileSoftwareSkillSerializer
+    ProfileBioSerializer, ProfileImageSerializer, ProfileSpecializedInSerializer, \
+    ProfileSoftwareSkillSerializer, SquadSerializer
 
 
 class RetrieveUser(RetrieveAPIView):
@@ -112,3 +112,8 @@ class CreateJob(CreateAPIView):
 class DeleteJob(DestroyAPIView):
     queryset = Job.objects.all()
     serializer_class = JobSerializer
+
+
+class SquadViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = SquadSerializer
+    queryset = User.objects.all()

@@ -23,5 +23,5 @@ class ProfileImageSerializer(ModelSerializer):
     class Meta:
         model = ProfileImage
         read_only = 'thumbnail'
-        fields = ['image', 'thumbnail']
+        fields = ['id', 'image', 'thumbnail']
 

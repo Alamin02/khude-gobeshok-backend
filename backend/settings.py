@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'comments',
     'directmessages',
     'notifications',
+    'company',
 ]
 
 MIDDLEWARE = [

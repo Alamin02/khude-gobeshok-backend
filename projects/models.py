@@ -1,6 +1,7 @@
 from django.db import models
 from users.models import User
 from django.contrib.postgres.fields import JSONField
+from contents.models import ThumbnailImage
 
 
 # Create your models here.
@@ -9,7 +10,7 @@ class Project(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,)
     tags = models.CharField(max_length=120, blank=True)
     teammates = models.CharField(max_length=120, blank=True)
-    thumbnail = models.URLField()
+    cover_image = models.ForeignKey(ThumbnailImage, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)

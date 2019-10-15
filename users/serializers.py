@@ -11,7 +11,7 @@ class UserSerializer(ModelSerializer):
 
 
 class ProfileSerializer(ModelSerializer):
-    avatar = ProfileImageSerializer()
+    avatar = ProfileImageSerializer(required=False)
 
     class Meta:
         model = Profile

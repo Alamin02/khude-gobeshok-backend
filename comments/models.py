@@ -12,3 +12,5 @@ class Comment(models.Model):
     time = models.DateTimeField(auto_now=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
 
+    class Meta:
+        ordering = ['-time']

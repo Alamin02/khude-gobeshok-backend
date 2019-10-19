@@ -4,10 +4,12 @@ from .models import DirectMessage
 from users.models import User
 from .serializers import ConversationSerializer
 from django.db.models import Q
+from rest_framework.permissions import IsAuthenticated
 
 
 class ConversationViewSet(viewsets.ModelViewSet):
     serializer_class = ConversationSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
         profile_name = self.request.GET.get('username', None)

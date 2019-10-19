@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from comments.models import Comment
 from users.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.exceptions import ValidationError
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    commenter = serializers.CharField(max_length=150)
+    commenter = serializers.CharField(max_length=150, read_only=True)
     avatar = serializers.ImageField(source='commenter.profile.avatar.thumbnail', read_only=True)
 
     class Meta:
@@ -18,7 +20,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         data = validated_data.copy()
-
-        # TODO: Add exception e.g: get_object_or_404
-        data['commenter'] = User.objects.get(username=data['commenter'])
+        try:
+            data['commenter'] = User.objects.get(username=self.context.get('user'))
+        except ObjectDoesNotExist:
+            return ValidationError('User does not exist, strange!')
         return super(CommentSerializer, self).create(data)

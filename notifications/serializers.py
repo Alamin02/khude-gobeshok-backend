@@ -3,6 +3,9 @@ from notifications.models import Notification
 from users.models import User
 from projects.models import Project
 from comments.models import Comment
+from users.serializers import UserSerializer
+from projects.serializers import ProjectListSerializer
+from comments.serializers import CommentSerializer
 
 
 class NotificationRelatedField(serializers.RelatedField):
@@ -11,11 +14,14 @@ class NotificationRelatedField(serializers.RelatedField):
 
     def to_representation(self, value):
         if isinstance(value, User):
-            return value.username
+            user = UserSerializer(value)
+            return {'type': 'user', 'data': user.data}
         if isinstance(value, Project):
-            return value.title
+            project = ProjectListSerializer(value)
+            return {'type': 'project', 'data': project.data}
         if isinstance(value, Comment):
-            return value.description
+            comment = CommentSerializer(value)
+            return {'type': 'project', 'data': comment.data}
         else:
             raise Exception("Unexpected Object Type")
 

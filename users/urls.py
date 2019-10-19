@@ -1,7 +1,7 @@
 from django.urls import path
 
 from users.views import RetrieveUser, RetrieveProfile, ListEducation, CreateEducation, ListJob, CreateJob, \
-    DeleteEducation, DeleteJob, UpdateBio, UpdateProfilePic, UpdateSpecializedIn, UpdateSoftwareSkill
+    DeleteEducation, DeleteJob, UpdateBio, UpdateSpecializedIn, UpdateSoftwareSkill, UpdateProfilePic
 
 urlpatterns = [
     path('get-user/<str:profile_username>', RetrieveUser.as_view(), name="get_user"),

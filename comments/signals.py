@@ -8,10 +8,10 @@ from notifications.models import Notification
 def notify_comment(sender, instance, **kwargs):
     comment_notification = Notification(
         level=Notification.INFO,
-        recipient=instance.commenter,
-        verb="Commented",
-        actor=instance.commenter
+        recipient=instance.project.author,
+        verb="commented on",
+        actor=instance.commenter,
+        target=instance.project
     )
-    print(comment_notification)
     comment_notification.save()
     pass

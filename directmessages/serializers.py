@@ -1,13 +1,18 @@
 from rest_framework import serializers
 from .models import DirectMessage
 from users.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class ConversationSerializer(serializers.ModelSerializer):
     sender = serializers.CharField(max_length=150)
     recipient = serializers.CharField(max_length=150)
-    avatar = serializers.ImageField(
+    sender_avatar = serializers.ImageField(
         source='sender.profile.avatar.thumbnail',
+        read_only=True,
+    )
+    recipient_avatar = serializers.ImageField(
+        source='recipient.profile.avatar.thumbnail',
         read_only=True,
     )
 
@@ -20,7 +25,8 @@ class ConversationSerializer(serializers.ModelSerializer):
             'sent_at',
             'sender_name',
             'recipient_name',
-            'avatar',
+            'sender_avatar',
+            'recipient_avatar',
         ]
 
     sender_name = serializers.SerializerMethodField('get_sender_name')
@@ -39,7 +45,11 @@ class ConversationSerializer(serializers.ModelSerializer):
 
         # TODO: Add exception e.g: get_object_or_404
         data['sender'] = User.objects.get(username=data['sender'])
-        data['recipient'] = User.objects.get(username=data['recipient'])
+        try:
+            data['recipient'] = User.objects.get(username=data['recipient'])
+        except(ObjectDoesNotExist,):
+            raise serializers.ValidationError("No user with this username")
+
         return super(ConversationSerializer, self).create(data)
 
 

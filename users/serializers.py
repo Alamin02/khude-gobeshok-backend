@@ -5,9 +5,11 @@ from contents.serializers import ProfileImageSerializer
 
 
 class UserSerializer(ModelSerializer):
+    avatar = ProfileImageSerializer(source='profile.avatar')
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'date_joined']
+        fields = ['username', 'email', 'date_joined', 'avatar']
 
 
 class ProfileSerializer(ModelSerializer):
@@ -69,3 +71,9 @@ class JobSerializer(ModelSerializer):
     class Meta:
         model = Job
         fields = ['id', 'company', 'position', 'start_date', 'end_date', 'currently_working']
+
+
+class UpdateProfilePicSerializer(ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['avatar']

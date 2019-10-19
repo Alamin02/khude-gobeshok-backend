@@ -11,7 +11,7 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     profile_owner = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    avatar = models.ForeignKey(ProfileImage, blank=True, null=True, on_delete=models.SET_NULL)
+    avatar = models.OneToOneField(ProfileImage, blank=True, null=True, on_delete=models.SET_NULL)
     full_name = models.CharField(max_length=100, blank=True)
     bio = models.CharField(max_length=150, blank=True)
     specialized_in = models.TextField(blank=True)

@@ -18,7 +18,8 @@ class ThumbnailImageSerializer(ModelSerializer):
 
 
 class ProfileImageSerializer(ModelSerializer):
-    thumbnail = ImageField('thumbnail', )
+    thumbnail = ImageField('thumbnail',)
+    image = ImageField()
 
     class Meta:
         model = ProfileImage

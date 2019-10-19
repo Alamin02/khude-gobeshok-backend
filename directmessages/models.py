@@ -1,8 +1,6 @@
 from django.db import models
 from users.models import User
 
-import datetime
-from django.db import models
 from django.db.models import F, When, Case
 
 
@@ -32,3 +30,6 @@ class DirectMessage(models.Model):
 
     def __str__(self):
         return f'[{self.sent_at.ctime()}] {self.sender} -> {self.recipient}'
+
+    class Meta:
+        ordering = ['-sent_at']

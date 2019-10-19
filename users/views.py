@@ -4,8 +4,13 @@ from rest_framework import viewsets, mixins
 from users.models import User, Education, Job
 from users.serializers import UserSerializer, ProfileSerializer, \
     EducationListSerializer, EducationSerializer, JobSerializer, \
-    ProfileBioSerializer, ProfileImageSerializer, ProfileSpecializedInSerializer, \
-    ProfileSoftwareSkillSerializer, SquadSerializer
+    ProfileBioSerializer, ProfileSpecializedInSerializer, \
+    ProfileSoftwareSkillSerializer, SquadSerializer, UpdateProfilePicSerializer
+
+
+class UserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
 
 class RetrieveUser(RetrieveAPIView):
@@ -37,7 +42,7 @@ class UpdateBio(UpdateAPIView):
 
 
 class UpdateProfilePic(UpdateAPIView):
-    serializer_class = ProfileImageSerializer
+    serializer_class = UpdateProfilePicSerializer
 
     def get_object(self):
         profile = User.objects.get(username=self.request.user).profile

@@ -6,6 +6,12 @@ from users.serializers import UserSerializer, ProfileSerializer, \
     EducationListSerializer, EducationSerializer, JobSerializer, \
     ProfileBioSerializer, ProfileSpecializedInSerializer, \
     ProfileSoftwareSkillSerializer, SquadSerializer, UpdateProfilePicSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+
+'''
+Have to change all STUPID views from here and change them to cool ViewSets
+Also have to change the UGLY looking imports...
+'''
 
 
 class UserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -26,6 +32,7 @@ class RetrieveUser(RetrieveAPIView):
 class RetrieveProfile(RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     lookup_url_kwarg = "profile_username"
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def get_object(self):
         profile_name = self.kwargs.get(self.lookup_url_kwarg)
@@ -35,6 +42,7 @@ class RetrieveProfile(RetrieveUpdateAPIView):
 
 class UpdateBio(UpdateAPIView):
     serializer_class = ProfileBioSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get_object(self):
         profile = User.objects.get(username=self.request.user).profile
@@ -43,6 +51,7 @@ class UpdateBio(UpdateAPIView):
 
 class UpdateProfilePic(UpdateAPIView):
     serializer_class = UpdateProfilePicSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_object(self):
         profile = User.objects.get(username=self.request.user).profile
@@ -52,6 +61,7 @@ class UpdateProfilePic(UpdateAPIView):
 class UpdateSpecializedIn(UpdateAPIView):
     serializer_class = ProfileSpecializedInSerializer
     lookup_url_kwarg = "profile_name"
+    permission_classes = (IsAuthenticated,)
 
     def get_object(self):
         profile_name = self.kwargs.get(self.lookup_url_kwarg)
@@ -62,6 +72,7 @@ class UpdateSpecializedIn(UpdateAPIView):
 class UpdateSoftwareSkill(UpdateAPIView):
     serializer_class = ProfileSoftwareSkillSerializer
     lookup_url_kwarg = "profile_name"
+    permission_classes = (IsAuthenticated,)
 
     def get_object(self):
         profile_name = self.kwargs.get(self.lookup_url_kwarg)
@@ -83,6 +94,7 @@ class ListEducation(ListAPIView):
 class CreateEducation(CreateAPIView):
     queryset = Education.objects.all()
     serializer_class = EducationSerializer
+    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -92,6 +104,7 @@ class CreateEducation(CreateAPIView):
 class DeleteEducation(DestroyAPIView):
     queryset = Education.objects.all()
     serializer_class = EducationSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class ListJob(ListAPIView):
@@ -108,6 +121,20 @@ class ListJob(ListAPIView):
 class CreateJob(CreateAPIView):
     serializer_class = JobSerializer
     queryset = Job.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class JobViewSet(mixins.ListModelMixin,
+                 mixins.CreateModelMixin,
+                 mixins.DestroyModelMixin,
+                 viewsets.GenericViewSet):
+    serializer_class = JobSerializer
+
+    def get_queryset(self):
+        return Job.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -117,6 +144,7 @@ class CreateJob(CreateAPIView):
 class DeleteJob(DestroyAPIView):
     queryset = Job.objects.all()
     serializer_class = JobSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class SquadViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

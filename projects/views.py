@@ -1,7 +1,6 @@
 from users.models import User
 from .models import Project
 from .serializers import ProjectCreateSerializer, ProjectListSerializer
-from rest_framework.generics import ListAPIView
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.core.exceptions import ObjectDoesNotExist

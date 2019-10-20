@@ -112,7 +112,6 @@ DATABASES = {
     }
 }
 
-
 # Rest Framework Settings
 
 REST_FRAMEWORK = {
